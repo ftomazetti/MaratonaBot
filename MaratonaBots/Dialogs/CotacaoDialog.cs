@@ -21,14 +21,21 @@ namespace MaratonaBots.Dialogs
         [LuisIntent("Sobre")]
         public async Task Sobre(IDialogContext context, LuisResult result)
         {
-            await context.PostAsync("Eu sou um BOT e aprendo sempre, tenha paciência comigo");
+            await context.PostAsync("Eu sou um BOT e aprendo sempre. Atualmente faço cotações de moedas");
         }
 
         [LuisIntent("Saudacao")]
         public async Task Saudacao(IDialogContext context, LuisResult result)
         {
-            await context.PostAsync("Olá tudo bem! me pergunte sobre cotação de moedas.");
+            await context.PostAsync("Olá tudo bem!");
         }
+
+        [LuisIntent("Desvio")]
+        public async Task Desvio(IDialogContext context, LuisResult result)
+        {
+            await context.PostAsync("Ninguém tem paciência comigo!");
+        }
+
 
         [LuisIntent("Cotacao")]
         public async Task Cotacao(IDialogContext context, LuisResult result)
