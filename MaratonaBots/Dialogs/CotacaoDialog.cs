@@ -29,7 +29,7 @@ namespace MaratonaBots.Dialogs
         {
             await context.PostAsync("Olá tudo bem!");
         }
-
+        // Frederico - mudança teste
         [LuisIntent("Desvio")]
         public async Task Desvio(IDialogContext context, LuisResult result)
         {
