@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Luis;
@@ -41,8 +43,48 @@ namespace MaratonaBots.Dialogs
         public async Task Cotacao(IDialogContext context, LuisResult result)
         {
             var moedas = result.Entities?.Select(e => e.Entity);
+            Thread.Sleep(2000);
             await context.PostAsync($"Eu farei a cotação das moedas. {String.Join(",", moedas.ToArray())}");
         }
+
+        [LuisIntent("identificacao")]
+        public async Task identificacao(IDialogContext context, LuisResult result)
+        {
+            var cidadao = result.Entities?.Select(e => e.Entity);
+            Thread.Sleep(2000);
+            await context.PostAsync($"Você é:  {String.Join(",", cidadao.ToArray())}");
+        }
+
+        [LuisIntent("geracao")]
+        public async Task geracao(IDialogContext context, LuisResult result)
+        {
+            var resultado = result.ToString();
+            var contexto = context;
+            var tipo = result.Entities?.Select(e => e.Entity);
+
+            var numregistro = extrair_numero(resultado);
+            var tiporegistro = extrair_tipo(resultado);
+            var email = extrair_email(resultado);
+
+            Thread.Sleep(2000);
+            await context.PostAsync($"Vamos gerar: {String.Join(",", tipo.ToArray())}");
+        }
+
+        private string extrair_numero(string conteudo)
+        {
+            return "";
+        }
+
+        private string extrair_tipo(string conteudo)
+        {
+            return "";
+        }
+
+        private string extrair_email(string conteudo)
+        {
+            return "";
+        }
+
 
     }
 }
