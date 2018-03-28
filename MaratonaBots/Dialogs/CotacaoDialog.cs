@@ -17,13 +17,13 @@ namespace MaratonaBots.Dialogs
         [LuisIntent("None")]
         public async Task None(IDialogContext context, LuisResult result)
         {
-            await context.PostAsync($"Desculpe, não entendi sua pergunta.{result.Query}");
+            await context.PostAsync($"Desculpe, não entendi sua pergunta: {result.Query}");
         }
 
         [LuisIntent("Sobre")]
         public async Task Sobre(IDialogContext context, LuisResult result)
         {
-            await context.PostAsync("Eu sou um BOT e aprendo sempre. Atualmente faço cotações de moedas");
+            await context.PostAsync("Eu sou um BOT ainda sem nome. Atualmente não faço grandes coisas");
         }
 
         [LuisIntent("Saudacao")]
@@ -35,7 +35,7 @@ namespace MaratonaBots.Dialogs
         [LuisIntent("Desvio")]
         public async Task Desvio(IDialogContext context, LuisResult result)
         {
-            await context.PostAsync("Ninguém tem paciência comigo!");
+            await context.PostAsync("Que isso! Seja educado!");
         }
 
 
@@ -58,29 +58,48 @@ namespace MaratonaBots.Dialogs
         [LuisIntent("geracao")]
         public async Task geracao(IDialogContext context, LuisResult result)
         {
-            var resultado = result.ToString();
+
             var contexto = context;
             var tipo = result.Entities?.Select(e => e.Entity);
+            var resultado = String.Join(",", tipo.ToArray());
 
-            var numregistro = extrair_numero(resultado);
-            var tiporegistro = extrair_tipo(resultado);
-            var email = extrair_email(resultado);
+            var numregistro = Extrair_numero(resultado);
+            var tiporegistro = Extrair_tipo(resultado);
+            var email = Extrair_email(resultado);
 
             Thread.Sleep(2000);
-            await context.PostAsync($"Vamos gerar: {String.Join(",", tipo.ToArray())}");
+            await context.PostAsync($"Recebi a string: {String.Join(",", tipo.ToArray())}");
+            await context.PostAsync($"Vamos gerar: {tiporegistro} {numregistro}");
         }
 
-        private string extrair_numero(string conteudo)
+        private string Extrair_numero(string conteudo)
         {
-            return "";
+            string[] partes = conteudo.Split(',');
+            var retorno = "";
+            foreach (var parte in partes)
+            {
+                if (parte.Length == 6)
+                {
+                    retorno = parte;
+                    break;
+                }
+            }
+            return retorno;
         }
 
-        private string extrair_tipo(string conteudo)
+        private string Extrair_tipo(string conteudo)
         {
-            return "";
+            var retorno = "VAZIO ";
+                if (conteudo.ToLower().Contains("pa"))
+                    retorno = " PA ";
+
+            if (conteudo.ToLower().Contains("ficha"))
+                retorno = " FICHA ";
+
+            return retorno;
         }
 
-        private string extrair_email(string conteudo)
+        private string Extrair_email(string conteudo)
         {
             return "";
         }
