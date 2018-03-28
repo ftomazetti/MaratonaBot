@@ -38,7 +38,6 @@ namespace MaratonaBots.Dialogs
             await context.PostAsync("Que isso! Seja educado!");
         }
 
-
         [LuisIntent("Cotacao")]
         public async Task Cotacao(IDialogContext context, LuisResult result)
         {
@@ -101,7 +100,17 @@ namespace MaratonaBots.Dialogs
 
         private string Extrair_email(string conteudo)
         {
-            return "";
+            string[] partes = conteudo.Split(',');
+            var retorno = "";
+            foreach (var parte in partes)
+            {
+                if (parte.Contains("@"))
+                {
+                    retorno = parte;
+                    break;
+                }
+            }
+            return retorno;
         }
 
 
